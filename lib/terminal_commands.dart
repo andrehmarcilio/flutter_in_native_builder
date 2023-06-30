@@ -1,13 +1,9 @@
 import 'dart:io';
 
 class TerminalCommand {
-  static void deleteFile(String filePath) {
+  static Future<void> deleteFile(String filePath) async {
     if (Platform.isWindows) {
-      Process.runSync(
-        'rmdir',
-        ['/s', filePath],
-        runInShell: true,
-      );
+      Directory(filePath).deleteSync(recursive: true);
     } else {
       Process.runSync('rm', ['-r', filePath]);
     }

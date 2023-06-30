@@ -62,6 +62,10 @@ void main(List<String> arguments) async {
 
 Future<void> _buildAndroidAAR(Project project) async {
   // Build Android Flutter Module
+  MyLogger.log('Deleting Flutter old Android aar', color: ColorCodes.yellow);
+
+  TerminalCommand.deleteFile('${project.flutterPath}/build/host/outputs/repo');
+
   MyLogger.log('Building Flutter Android aar', color: ColorCodes.yellow);
 
   final process = await Process.start(
@@ -102,6 +106,12 @@ Future<void> _buildAndroidAAR(Project project) async {
 
 Future<void> _buildIOSArtefacts(Project project) async {
   // Build Android Flutter Module
+  MyLogger.log('Removing old IOS Artefacts', color: ColorCodes.yellow);
+
+  Process.runSync('rm', ['-r', '${project.flutterPath}/artefacts/ios/Debug']);
+  Process.runSync('rm', ['-r', '${project.flutterPath}/artefacts/ios/Profile']);
+  Process.runSync('rm', ['-r', '${project.flutterPath}/artefacts/ios/Release']);
+
   MyLogger.log('Building IOS Artefacts', color: ColorCodes.yellow);
 
   final process = await Process.start(
